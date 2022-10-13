@@ -1,14 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/util
+       https://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--扫描控制层组件-->
+    <!-- 包扫描 -->
     <context:component-scan base-package="com.djj.ssm.controller"></context:component-scan>
 
-    <!-- 配置Thymeleaf视图解析器 -->
+
+    <!-- 配置 Thymeleaf 视图解析器 配置完毕后可以使用MVC的方式完成视图渲染和跳转了 -->
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="order" value="1"/>
         <property name="characterEncoding" value="UTF-8"/>
@@ -22,23 +29,29 @@
 
                         <!-- 视图后缀 -->
                         <property name="suffix" value=".html"/>
+
                         <property name="templateMode" value="HTML5"/>
-                        <property name="characterEncoding" value="UTF-8" />
+                        <property name="characterEncoding" value="UTF-8"/>
                     </bean>
                 </property>
             </bean>
         </property>
     </bean>
 
-    <!--配置默认的servlet处理静态资源-->
+    <!-- 处理静态资源 -->
     <mvc:default-servlet-handler />
 
-    <!--开启mvc的注解驱动-->
+    <!-- 开启注解驱动
+         @ControllerAdvice
+         @ResponseBody
+         @RequestBody
+         ....
+    -->
     <mvc:annotation-driven />
 
-    <!--配置视图控制器-->
+    <!-- 配置视图控制器 -->
     <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
 
     <!--配置文件上传解析器-->
-    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
 </beans>
